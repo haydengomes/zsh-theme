@@ -32,7 +32,7 @@ function svn_prompt_info {
         svn_branch=`svn info | grep '^URL:' | egrep -o '((tags|branches)/[^/]+|trunk).*' | sed -E -e 's/^(branches|tags)\///g'`
         svn_repository=`svn info | grep '^Repository Root:' | egrep -o '(http|https|file|svn|svn+ssh)/[^/]+' | egrep -o '[^/]+$'`
         svn_version=`svnversion -n`
-        
+
         # this is the slowest test of the bunch
         change_count=`svn status | grep "?\|\!\|M\|A" | wc -l`
         if [ "$change_count" != "       0" ]; then
@@ -40,10 +40,10 @@ function svn_prompt_info {
         else
             svn_change="$ZSH_THEME_GIT_PROMPT_CLEAN"
         fi
-        
+
         # show the results
         echo "%{$fg[blue]%}$ZSH_THEME_SVN_PROMPT_PREFIX$svn_repository/$svn_branch @ $svn_version%{$reset_color%}%{$fg[yellow]%}$svn_change$ZSH_THEME_SVN_PROMPT_SUFFIX"
-        
+
     fi
 }
 
@@ -64,9 +64,3 @@ ZSH_THEME_SVN_PROMPT_PREFIX="svn$ZSH_THEME_VCS_PROMPT_PREFIX"
 ZSH_THEME_SVN_PROMPT_SUFFIX="$ZSH_THEME_VCS_PROMPT_SUFFIX"
 ZSH_THEME_SVN_PROMPT_DIRTY="$ZSH_THEME_VCS_PROMPT_DIRTY"
 ZSH_THEME_SVN_PROMPT_CLEAN="$ZSH_THEME_VCS_PROMPT_CLEAN"
-
-# Update current prompt every second (to refresh the current time)
-TMOUT=1
-TRAPALRM() {
-    zle reset-prompt
-}
